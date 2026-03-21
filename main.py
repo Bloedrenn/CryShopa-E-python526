@@ -1,6 +1,11 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+app = FastAPI(
+    title="Первый проект на FastAPI",
+    description="Ультра **мега** проект на который потрачено 9 жизней",
+    # docs_url=None,
+    # redoc_url=None
+)
 
 
 @app.get("/")
