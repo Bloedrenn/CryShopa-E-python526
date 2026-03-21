@@ -11,3 +11,8 @@ app = FastAPI(
 @app.get("/")
 async def welcome() -> dict:
     return {"message": "Hello, FastAPI!"}
+
+
+@app.get("/hello/{first_name}/{last_name}")
+async def welcome_user(first_name: str, last_name: str) -> dict:
+    return {"msg": f'Hello {first_name} {last_name}'}
