@@ -16,3 +16,8 @@ async def welcome() -> dict:
 @app.get("/hello/{first_name}/{last_name}")
 async def welcome_user(first_name: str, last_name: str) -> dict:
     return {"msg": f'Hello {first_name} {last_name}'}
+
+
+@app.get("/order/{order_id}")
+async def get_order(order_id: int) -> dict:
+    return {"id": order_id}
