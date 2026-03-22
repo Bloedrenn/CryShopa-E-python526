@@ -32,3 +32,8 @@ async def profile() -> dict:
 @app.get("/user/{user_name}")
 async def user(user_name: str) -> dict:
     return {"user": user_name}
+
+
+@app.get("/user")
+async def login(username: str, age: int) -> dict:
+    return {"user": username, "age": age}
