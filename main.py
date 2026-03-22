@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import FastAPI, Path
 
 app = FastAPI(
@@ -52,7 +54,19 @@ async def get_employee(name: str, department: str, company: str) -> dict:
 
 @app.get("/user/{username}/{age}")
 async def login_user(
-    username: str = Path(min_length=3, max_length=15, description='Enter your username', example='Ilya'),
-    age: int = Path(ge=0, le=100, description="Enter your age")
+    username: Annotated[str, Path(min_length=3, max_length=15, description='Enter your username', example='Ilya')],
+    age: Annotated[int, Path(ge=0, le=100, description="Enter your age")]
 ) -> dict:
     return {"user": username, "age": age}
+
+
+
+
+
+# В Python параметры без значений по умолчанию (обязательные) должны объявляться до параметров со значениями по умолчанию (необязательные)
+# first_name: str = Path(min_length=3, max_length=15, description='Enter your name', example='Ilya'), # Python считает что есть значение по умолч., на самом же деле username обязателен
+# last_name: str # Ошибка
+
+# Annotated позволяет комбинировать тип (str) и валидацию (Path) без присваивания значения по умолчанию, что устраняет проблему порядка
+# first_name: Annotated[str, Path(min_length=3, max_length=15, description='Enter your username', example='Ilya')],
+# last_name: str
