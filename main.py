@@ -37,3 +37,9 @@ async def user(user_name: str) -> dict:
 @app.get("/user")
 async def login(username: str, age: int) -> dict:
     return {"user": username, "age": age}
+
+
+# Несмотря на то, что параметры пути предшествуют параметрам запроса в URL-адресе, нет необходимости следовать порядку при их объявлении в определении функции
+@app.get("/employee/{name}/company/{company}")
+async def get_employee(name: str, department: str, company: str) -> dict:
+    return {"Employee": name, "Company": company, "Department": department}
