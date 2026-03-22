@@ -35,7 +35,12 @@ async def user(user_name: str) -> dict:
 
 
 @app.get("/user")
-async def login(age: int, username: str = "гость") -> dict:
+async def login(age: int, username: str | None = None) -> dict: # Можно так: "username: Optional[str] = None", но много лишнего кода (нужен импорт)
+    # if username == "гость":
+    #     return {"age": age}
+    if username is None:
+        return {"age": age}
+
     return {"user": username, "age": age}
 
 
