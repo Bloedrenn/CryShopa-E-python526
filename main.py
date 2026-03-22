@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Path
 
 app = FastAPI(
     title="Первый проект на FastAPI",
@@ -48,3 +48,11 @@ async def login(age: int, username: str | None = None) -> dict: # Можно т�
 @app.get("/employee/{name}/company/{company}")
 async def get_employee(name: str, department: str, company: str) -> dict:
     return {"Employee": name, "Company": company, "Department": department}
+
+
+@app.get("/user/{username}/{age}")
+async def login_user(
+    username: str = Path(min_length=3, max_length=15, description='Enter your username', example='Ilya'),
+    age: int = Path(ge=0, le=100, description="Enter your age")
+) -> dict:
+    return {"user": username, "age": age}
