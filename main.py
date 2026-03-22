@@ -35,7 +35,7 @@ async def user(user_name: str) -> dict:
 
 
 @app.get("/user")
-async def login(username: str, age: int) -> dict:
+async def login(age: int, username: str = "гость") -> dict:
     return {"user": username, "age": age}
 
 
