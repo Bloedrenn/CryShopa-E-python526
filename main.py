@@ -2,6 +2,8 @@ from typing import Annotated
 
 from fastapi import FastAPI, Path
 
+Username = Annotated[str, Path(min_length=3, max_length=15, description='Enter your username', example='Ilya')]
+
 app = FastAPI(
     title="Первый проект на FastAPI",
     description="Ультра **мега** проект на который потрачено 9 жизней",
@@ -32,7 +34,7 @@ async def profile() -> dict:
 
 
 @app.get("/user/{user_name}")
-async def user(user_name: str) -> dict:
+async def user(user_name: Username) -> dict:
     return {"user": user_name}
 
 
@@ -54,7 +56,7 @@ async def get_employee(name: str, department: str, company: str) -> dict:
 
 @app.get("/user/{username}/{age}")
 async def login_user(
-    username: Annotated[str, Path(min_length=3, max_length=15, description='Enter your username', example='Ilya')],
+    username: Username,
     age: Annotated[int, Path(ge=0, le=100, description="Enter your age")]
 ) -> dict:
     return {"user": username, "age": age}
