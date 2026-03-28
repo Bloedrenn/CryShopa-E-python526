@@ -4,6 +4,7 @@ from fastapi import FastAPI, Path, Query
 from pydantic import StringConstraints
 
 Username = Annotated[str, Path(min_length=3, max_length=15, description='Enter your username', example='Ilya')]
+Name = Annotated[str, StringConstraints(min_length=3, max_length=8)]
 
 app = FastAPI(
     title="Первый проект на FastAPI",
@@ -77,9 +78,7 @@ async def login_user(
 @app.get("/users")
 async def search(
     people: Annotated[
-        list[
-            Annotated[str, StringConstraints(min_length=3, max_length=8)]
-        ],
+        list[Name],
         Query(max_length=5, description="List of user names", example=["Tom", "Sam"])
     ] = []
 ) -> dict:
