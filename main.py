@@ -41,7 +41,14 @@ async def user(user_name: Username) -> dict:
 @app.get("/user")
 async def login(
     age: int,
-    username: Annotated[str | None, Query(max_length=10, description="Enter your username", include_in_schema=False)] = None # Напомню: если нужно сделать обязательным, убираем "= None"
+    username: Annotated[
+        str | None,
+        Query(
+            max_length=10,
+            description="Enter your username",
+            pattern="^(buyer|seller)$"
+        )
+    ] = None # Напомню: если нужно сделать обязательным, убираем "= None"
     # username: str | None = Query(default=None, max_length=10, description="Enter your username") # - если по каким-то причинам мы хотим использовать Query без Annotated
 ) -> dict: # Можно так: "username: Optional[str] = None", но много лишнего кода (нужен импорт)
     # if username == "гость":
