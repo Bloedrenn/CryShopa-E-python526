@@ -73,6 +73,14 @@ async def login_user(
     return {"user": username, "age": age}
 
 
+@app.get("/users")
+async def search(
+    people: Annotated[
+        list[str],
+        Query(min_length=1, max_length=5, description="List of user names", example=["Tom", "Sam"])
+    ]
+) -> dict:
+    return {"users": people}
 
 
 
