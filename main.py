@@ -7,8 +7,15 @@ Username = Annotated[str, Path(min_length=3, max_length=15, description='Enter y
 Name = Annotated[str, StringConstraints(min_length=3, max_length=8)]
 
 app = FastAPI(
+    debug=True,
     title="Первый проект на FastAPI",
     description="Ультра **мега** проект на который потрачено 9 жизней",
+    # summary="My CRUD application.", # - не поддерживает MD-синтаксис
+    # version="0.0.1", # - версия нашего приложения
+    openapi_tags=[
+        {"name": "users", "description": "User operations"},
+        {"name": "orders", "description": "Orders operations"}
+    ],
     # docs_url=None,
     # redoc_url=None
 )
@@ -19,12 +26,12 @@ async def welcome() -> dict:
     return {"message": "Hello, FastAPI!"}
 
 
-@app.get("/hello/{first_name}/{last_name}")
+@app.get("/hello/{first_name}/{last_name}", tags=['users']) # - tags указан для openapi_tags в app
 async def welcome_user(first_name: str, last_name: str) -> dict:
     return {"msg": f'Hello {first_name} {last_name}'}
 
 
-@app.get("/order/{order_id}")
+@app.get("/order/{order_id}", tags=['orders'])
 async def get_order(order_id: int) -> dict:
     return {"id": order_id}
 
