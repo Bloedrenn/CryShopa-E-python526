@@ -77,8 +77,8 @@ async def login_user(
 async def search(
     people: Annotated[
         list[str],
-        Query(min_length=1, max_length=5, description="List of user names", example=["Tom", "Sam"])
-    ]
+        Query(max_length=5, description="List of user names", example=["Tom", "Sam"])
+    ] = []
 ) -> dict:
     return {"users": people}
 
