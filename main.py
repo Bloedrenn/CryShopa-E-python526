@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import FastAPI, Path
+from fastapi import FastAPI, Path, Query
 
 Username = Annotated[str, Path(min_length=3, max_length=15, description='Enter your username', example='Ilya')]
 
@@ -39,7 +39,11 @@ async def user(user_name: Username) -> dict:
 
 
 @app.get("/user")
-async def login(age: int, username: str | None = None) -> dict: # Можно так: "username: Optional[str] = None", но много лишнего кода (нужен импорт)
+async def login(
+    age: int,
+    username: Annotated[str | None, Query(max_length=10, description="Enter your username")] = None # Напомню: если нужно сделать обязательным, убираем "= None"
+    # username: str | None = Query(default=None, max_length=10, description="Enter your username") # - если по каким-то причинам мы хотим использовать Query без Annotated
+) -> dict: # Можно так: "username: Optional[str] = None", но много лишнего кода (нужен импорт)
     # if username == "гость":
     #     return {"age": age}
     if username is None:
