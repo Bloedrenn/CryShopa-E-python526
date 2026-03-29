@@ -1,4 +1,6 @@
-from fastapi import FastAPI
+from typing import Annotated
+
+from fastapi import FastAPI, HTTPException, Path, status
 
 app = FastAPI()
 
@@ -12,3 +14,28 @@ users_db = {
 @app.get("/users")
 async def get_users() -> dict:
   return users_db
+
+
+@app.get("/users/{user_id}")
+async def get_user(
+  user_id: Annotated[int, Path(ge=1)]
+) -> dict:
+  try:
+    return users_db[user_id]
+  except:
+    raise HTTPException(
+      status_code=status.HTTP_404_NOT_FOUND,
+      detail="User not found"
+    )
+
+
+  # Вариант с .get():
+  # user = users_db.get(user_id)
+
+  # if user is None:
+  #   raise HTTPException(
+  #     status_code=status.HTTP_404_NOT_FOUND,
+  #     detail="User not found"
+  #   )
+  
+  # return user
