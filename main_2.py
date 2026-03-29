@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import FastAPI, HTTPException, Path, status
+from fastapi import FastAPI, HTTPException, Path, Query, status
 
 app = FastAPI()
 
@@ -39,3 +39,15 @@ async def get_user(
   #   )
   
   # return user
+
+
+@app.post("/users", status_code=status.HTTP_201_CREATED)
+async def create_user(
+  name: Annotated[str, Query(max_length=30)],
+  age: Annotated[int, Query(ge=1, le=120)]
+) -> dict: # Пока что параметры запроса
+  new_index = max(users_db) + 1 if users_db else 1
+  new_user = {"name": name, "age": age}
+  users_db[new_index] = new_user
+  # return "User created!"
+  return new_user
