@@ -4,6 +4,8 @@ from fastapi import Body, FastAPI, HTTPException, Path, status
 
 app = FastAPI()
 
+PathID = Annotated[int, Path(ge=1)]
+
 # Это словарь, имитирующий базу данных. Ключи — целые числа (ID пользователей), значения — словари (данные пользователей).
 users_db = {
   1: {"name": "Joshua", "age": 22},
@@ -18,7 +20,7 @@ async def get_users() -> dict:
 
 @app.get("/users/{user_id}")
 async def get_user(
-  user_id: Annotated[int, Path(ge=1)]
+  user_id: PathID
 ) -> dict:
   try:
     return users_db[user_id]
@@ -51,3 +53,21 @@ async def create_user(
   users_db[new_index] = new_user
   # return "User created!"
   return new_user
+
+
+@app.put("/users/{user_id}")
+async def update_user(
+  user_id: PathID,
+  name: Annotated[str, Body(max_length=30)],
+  age: Annotated[int, Body(ge=1, le=120)]
+) -> dict:
+  if user_id not in users_db:
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
+  updated_user = {
+    "name": name,
+    "age": age
+  }
+  users_db[user_id] = updated_user
+  # return "User updated!"
+  return updated_user
