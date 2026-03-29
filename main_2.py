@@ -7,3 +7,8 @@ users_db = {
   1: {"name": "Joshua", "age": 22},
   2: {"name": "Max", "age": 35}
 }
+
+
+@app.get("/users")
+async def get_users() -> dict:
+  return users_db
