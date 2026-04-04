@@ -105,3 +105,20 @@ async def patch_user(
     user['age'] = age
 
   return user
+
+
+@app.delete("/users/{user_id}")
+async def delete_user(user_id: PathID) -> str:
+  is_user_in_db(user_id)
+  users_db.pop(user_id)
+  return f"User ID={user_id} was deleted!"
+
+
+@app.delete("/users", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_users():
+  users_db.clear()
+# Ещё вариант:
+# @app.delete("/users")
+# async def delete_users() -> str:
+#   users_db.clear()
+#   return "All users were deleted!"
