@@ -27,3 +27,9 @@ async def get_user(
       status_code=status.HTTP_404_NOT_FOUND,
       detail="User not found"
     )
+
+
+@app.get("/users")
+async def get_users() -> list[UserGet]:
+  users = [user for user in users_db.values()]
+  return users
