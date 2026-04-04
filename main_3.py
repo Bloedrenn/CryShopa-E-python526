@@ -4,8 +4,8 @@ from pydantic import BaseModel
 app = FastAPI()
 
 users_db = {
-  1: {"name": "Joshua", "age": 22},
-  2: {"name": "Max", "age": 35}
+  1: {"name": "Joshua", "age": 22, "password": "sha256lfgkr&fkrejqw2325werw2325werw"},
+  2: {"name": "Max", "age": 35, "password": "sha256eqweq2312325werw2eqwe112edqwe"}
 }
 
 
