@@ -6,6 +6,19 @@ app = FastAPI()
 
 PathID = Annotated[int, Path(ge=1)]
 
+
+def is_user_in_db(user_id: int) -> bool:
+  if user_id not in users_db:
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+  
+  return True
+
+
+def get_user_from_db(user_id: int) -> dict:
+  if is_user_in_db(user_id):
+    return users_db[user_id]
+
+
 # Это словарь, имитирующий базу данных. Ключи — целые числа (ID пользователей), значения — словари (данные пользователей).
 users_db = {
   1: {"name": "Joshua", "age": 22},
@@ -61,8 +74,7 @@ async def update_user(
   name: Annotated[str, Body(max_length=30)],
   age: Annotated[int, Body(ge=1, le=120)]
 ) -> dict:
-  if user_id not in users_db:
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+  is_user_in_db(user_id)
 
   updated_user = {
     "name": name,
@@ -71,3 +83,25 @@ async def update_user(
   users_db[user_id] = updated_user
   # return "User updated!"
   return updated_user
+
+
+@app.patch("/users/{user_id}")
+async def patch_user(
+  user_id: PathID,
+  name: Annotated[str | None, Body(max_length=30)] = None,
+  age: Annotated[int | None, Body(ge=1, le=120)] = None
+) -> dict:
+  user = get_user_from_db(user_id)
+
+  if name is None and age is None:
+    raise HTTPException(
+      status_code=status.HTTP_400_BAD_REQUEST,
+      detail="You must update at least one field"
+    )
+
+  if name is not None:
+    user['name'] = name
+  if age is not None:
+    user['age'] = age
+
+  return user
