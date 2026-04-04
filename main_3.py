@@ -33,3 +33,21 @@ async def get_user(
 async def get_users() -> list[UserGet]:
   users = [user for user in users_db.values()]
   return users
+
+
+class UserCreate(BaseModel):
+  name: str
+  age: int
+  password: str
+
+
+@app.post("/users", status_code=status.HTTP_201_CREATED)
+async def create_user(user_create: UserCreate) -> UserGet: # UserCreate - аналог body
+  # print(user_create)
+  # print(user_create.name)
+  # print(user_create.model_dump())
+
+  new_index = max(users_db) + 1 if users_db else 1
+  new_user = user_create.model_dump()
+  users_db[new_index] = new_user
+  return new_user
