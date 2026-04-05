@@ -83,10 +83,12 @@ class MessageRead(BaseModel):
 
 
 message = MessageRead(
-  id=1,
+  id="123", # Строку "123" Pydantic преобразует в int
   content="Hello, Pydantic!",
   metadata={
     "charset": 8,
     "code": 11
   }
 )
+
+print(message) # Вывод: id=123 content='Hello'
