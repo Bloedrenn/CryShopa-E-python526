@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, status
-from pydantic import BaseModel
+from pydantic import BaseModel, StrictInt
 
 app = FastAPI()
 
@@ -13,7 +13,7 @@ users_db = {
 class UserGet(BaseModel):
   # Определяем поля модели и их типы.
   name: str
-  age: int
+  age: StrictInt
 
 
 @app.get("/users/{user_id}") # Можно написать здесь: response_model=UserGet
@@ -37,7 +37,7 @@ async def get_users() -> list[UserGet]:
 
 class UserCreate(BaseModel): # Можно использовать и для PUT
   name: str
-  age: int
+  age: StrictInt
   password: str
 
 
@@ -55,7 +55,7 @@ async def create_user(user_create: UserCreate) -> UserGet: # UserCreate - ана
 
 class UserFullUpdate(BaseModel):
   name: str
-  age: int
+  age: StrictInt
   password: str
 
 
@@ -77,7 +77,7 @@ async def update_user(
 
 class UserPartialUpdate(BaseModel):
   name: str | None = None
-  age: int | None = None
+  age: StrictInt | None = None
   password: str | None = None
 
 
