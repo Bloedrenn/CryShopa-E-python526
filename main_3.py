@@ -9,11 +9,13 @@ users_db = {
 }
 
 
-# Создаём модель (схему), наследующуюся от BaseModel
-class UserGet(BaseModel):
-  # Определяем поля модели и их типы.
+class UserBase(BaseModel):
   name: str
   age: StrictInt
+
+
+class UserGet(UserBase):
+  pass
 
 
 @app.get("/users/{user_id}") # Можно написать здесь: response_model=UserGet
@@ -35,9 +37,7 @@ async def get_users() -> list[UserGet]:
   return users
 
 
-class UserCreate(BaseModel): # Можно использовать и для PUT
-  name: str
-  age: StrictInt
+class UserCreate(UserBase): # Можно использовать и для PUT
   password: str
 
 
@@ -53,10 +53,8 @@ async def create_user(user_create: UserCreate) -> UserGet: # UserCreate - ана
   return new_user
 
 
-class UserFullUpdate(BaseModel):
-  name: str
-  age: StrictInt
-  password: str
+class UserFullUpdate(UserCreate):
+  pass
 
 
 @app.put("/users/{user_id}")
