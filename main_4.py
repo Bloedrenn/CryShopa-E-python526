@@ -138,3 +138,22 @@
 
 # message = MessageRead(id=1, content="Hello, world!", priority=5.0)
 # print(message)
+
+
+
+
+# ========================================================================================= #
+# from typing import Annotated
+
+# from pydantic import BaseModel, Field
+
+
+# class ArticleCreate(BaseModel):
+#   text: str
+#   slug: Annotated[str, Field(pattern=r'^[-a-zA-Z0-9_]+$')]
+
+
+# # Примеры использования:
+# valid_article = ArticleCreate(text="Some text 1", slug="valid-slug_123")
+# # invalid_article_1 = ArticleCreate(text="Some text 2", slug="Invalid Slug!") # Ошибка
+# # invalid_article_2 = ArticleCreate(text="Some text 3", slug="") # Ошибка
