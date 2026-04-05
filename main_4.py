@@ -68,3 +68,25 @@
 #   author=AuthorRead(id=3, name="Alice", email="alice@example.com")
 # )
 # print(message.model_dump_json())
+
+
+
+
+# ========================================================================================= #
+from pydantic import BaseModel
+
+
+class MessageRead(BaseModel):
+  id: int
+  content: str
+  metadata: dict[str, int] # Словарь с ключами-строками и значениями-числами
+
+
+message = MessageRead(
+  id=1,
+  content="Hello, Pydantic!",
+  metadata={
+    "charset": 8,
+    "code": 11
+  }
+)
