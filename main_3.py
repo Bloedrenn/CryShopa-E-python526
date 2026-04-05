@@ -35,7 +35,7 @@ async def get_users() -> list[UserGet]:
   return users
 
 
-class UserCreate(BaseModel):
+class UserCreate(BaseModel): # Можно использовать и для PUT
   name: str
   age: int
   password: str
@@ -51,3 +51,25 @@ async def create_user(user_create: UserCreate) -> UserGet: # UserCreate - ана
   new_user = user_create.model_dump()
   users_db[new_index] = new_user
   return new_user
+
+
+class UserFullUpdate(BaseModel):
+  name: str
+  age: int
+  password: str
+
+
+@app.put("/users/{user_id}")
+async def update_user(
+  user_id: int,
+  user_full_update: UserFullUpdate
+) -> UserGet:
+  if user_id not in users_db:
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
+  # Имитация шифрования пароли
+  user_full_update.password = f'sha256lfgdklkkdh_ewq2{user_full_update.password}'
+
+  updated_user = user_full_update.model_dump()
+  users_db[user_id] = updated_user
+  return updated_user
