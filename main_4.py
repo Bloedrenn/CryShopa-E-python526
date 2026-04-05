@@ -92,3 +92,28 @@
 # )
 
 # print(message) # Вывод: id=123 content='Hello'
+
+
+
+
+# ========================================================================================= #
+# from pydantic import BaseModel, SecretStr
+
+
+# class UserCreate(BaseModel):
+#   username: str
+#   password: SecretStr
+
+
+# user = UserCreate(
+#   username="alice",
+#   password="gladiator5000"
+# )
+
+# print(user) # Получим: username='alice' password=SecretStr('**********')
+# print(user.password)
+
+# # Чтобы получить реальное значение пароля:
+# # print(
+# #   user.password.get_secret_value()
+# # )
