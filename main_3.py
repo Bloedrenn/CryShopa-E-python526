@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, status
-from pydantic import BaseModel, StrictInt
+from pydantic import BaseModel, ConfigDict, StrictInt
 
 app = FastAPI()
 
@@ -77,8 +77,10 @@ async def update_user(
 
 class UserPartialUpdate(BaseModel):
   name: str | None = None
-  age: StrictInt | None = None
+  age: int | None = None
   password: str | None = None
+
+  model_config = ConfigDict(strict=True)
 
 
 @app.patch("/users/{user_id}")
