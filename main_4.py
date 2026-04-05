@@ -122,14 +122,19 @@
 
 
 # ========================================================================================= #
-from pydantic import BaseModel, Field
+# from typing import Annotated
+
+# from pydantic import BaseModel, Field
 
 
-class MessageRead(BaseModel):
-  id: int = Field(gt=0) # Число: больше 0
-  content: str = Field(min_length=1, max_length=500, pattern=r"^[a-zA-Z0-9\s!,.?]*$") # Строка: 1-500 символов, только буквы, цифры, пробельные символы и конкретные знаки
-  priority: float = Field(default=0.0, ge=0.0, le=10.0) # Число: необязательное, от 0 до 10
+# class MessageRead(BaseModel):
+#   id: Annotated[int, Field(gt=0)] # Число: больше 0
+#   content: Annotated[str, Field(min_length=1, max_length=500, pattern=r"^[a-zA-Z0-9\s!,.?]*$")] # Строка: 1-500 символов, только буквы, цифры, пробельные символы и конкретные знаки
+#   priority: Annotated[
+#     float,
+#     Field(ge=0.0, le=10.0)
+#   ] = 0.0 # Число: необязательное, от 0 до 10
 
 
-message = MessageRead(id=1, content="Hello, world!", priority=5.0)
-print(message)
+# message = MessageRead(id=1, content="Hello, world!", priority=5.0)
+# print(message)
