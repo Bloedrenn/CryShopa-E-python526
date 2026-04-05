@@ -73,3 +73,35 @@ async def update_user(
   updated_user = user_full_update.model_dump()
   users_db[user_id] = updated_user
   return updated_user
+
+
+class UserPartialUpdate(BaseModel):
+  name: str | None = None
+  age: int | None = None
+  password: str | None = None
+
+
+@app.patch("/users/{user_id}")
+async def patch_user(
+  user_id: int,
+  user_partial_update: UserPartialUpdate
+) -> UserGet:
+  if user_id not in users_db:
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
+  if user_partial_update.name is None and user_partial_update.age is None and user_partial_update.password is None:
+    raise HTTPException(
+      status_code=status.HTTP_400_BAD_REQUEST,
+      detail="You must update at least one field"
+    )
+  
+  user = users_db[user_id]
+
+  if user_partial_update.name is not None:
+    user['name'] = user_partial_update.name
+  if user_partial_update.age is not None:
+    user['age'] = user_partial_update.age
+  if user_partial_update.password is not None:
+    user['password'] = f'sha256lfgdklkkdh_ewq2{user_partial_update.password}'
+
+  return user
