@@ -1,13 +1,15 @@
-from pydantic import BaseModel
+# from pydantic import BaseModel
 
 
-class MessageRead(BaseModel):
-  id: int
-  content: str
+# class MessageRead(BaseModel):
+#   id: int
+#   content: str
+#   tags: list[str] | None = None # Необязательное поле, по умолчанию None.
+#   priority: int = 0 # Необязательное поле, по умолчанию 0.
 
 
 # Пример использования
-message = MessageRead(id=1, content="Hello, Pydantic!") # Создает экземпляр модели, автоматически валидируя данные.
+# message = MessageRead(id=1, content="Hello, Pydantic!", tags=["important", 'new']) # Создает экземпляр модели, автоматически валидируя данные.
 # print(message) # Вывод: id=1 content='Hello, Pydantic!'
 # print(message.id)
 # print(message.content)
