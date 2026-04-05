@@ -73,22 +73,22 @@
 
 
 # ========================================================================================= #
-from pydantic import BaseModel
+# from pydantic import BaseModel, StrictInt
 
 
-class MessageRead(BaseModel):
-  id: int
-  content: str
-  metadata: dict[str, int] # Словарь с ключами-строками и значениями-числами
+# class MessageRead(BaseModel):
+#   id: StrictInt
+#   content: str
+#   metadata: dict[str, int] # Словарь с ключами-строками и значениями-числами
 
 
-message = MessageRead(
-  id="123", # Строку "123" Pydantic преобразует в int
-  content="Hello, Pydantic!",
-  metadata={
-    "charset": 8,
-    "code": 11
-  }
-)
+# message = MessageRead(
+#   id="123", # Строку "123" Pydantic преобразует в int
+#   content="Hello, Pydantic!",
+#   metadata={
+#     "charset": 8,
+#     "code": 11
+#   }
+# )
 
-print(message) # Вывод: id=123 content='Hello'
+# print(message) # Вывод: id=123 content='Hello'
