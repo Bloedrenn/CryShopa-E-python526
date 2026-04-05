@@ -42,3 +42,29 @@
 
 
 # user = UserCreate(email='example@mail.com', website='https://github.com/', age=18)
+
+
+
+
+# ========================================================================================= #
+# from pydantic import BaseModel, EmailStr
+
+
+# class AuthorRead(BaseModel):
+#   id: int
+#   name: str
+#   email: EmailStr
+
+
+# class MessageRead(BaseModel):
+#   id: int
+#   content: str
+#   author: AuthorRead # Вложенная модель
+
+
+# message = MessageRead(
+#   id=5,
+#   content="Hello bratha",
+#   author=AuthorRead(id=3, name="Alice", email="alice@example.com")
+# )
+# print(message.model_dump_json())
