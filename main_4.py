@@ -27,3 +27,18 @@
 
 
 # message = Message(id="not_an_integer", content="Hello") # Pydantic выдаст ошибку валидации
+
+
+
+
+# ========================================================================================= #
+# from pydantic import BaseModel, EmailStr, HttpUrl, PositiveInt
+
+
+# class UserCreate(BaseModel):
+#   email: EmailStr
+#   website: HttpUrl
+#   age: PositiveInt
+
+
+# user = UserCreate(email='example@mail.com', website='https://github.com/', age=18)
