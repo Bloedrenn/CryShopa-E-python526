@@ -157,3 +157,27 @@
 # valid_article = ArticleCreate(text="Some text 1", slug="valid-slug_123")
 # # invalid_article_1 = ArticleCreate(text="Some text 2", slug="Invalid Slug!") # Ошибка
 # # invalid_article_2 = ArticleCreate(text="Some text 3", slug="") # Ошибка
+
+
+
+
+# ========================================================================================= #
+# from typing import Annotated
+
+# from pydantic import BaseModel, Field, field_validator
+
+
+# class MessageCreate(BaseModel):
+#   content: Annotated[str, Field(min_length=1, max_length=500)]
+
+#   @field_validator("content")
+#   @classmethod
+#   def check_forbidden_words(cls, value):
+#     forbidden_words = ["spam", "offensive"]
+#     if any(forbidden_word in value.lower() for forbidden_word in forbidden_words):
+#       raise ValueError("Message contains forbidden words")
+#     return value
+
+
+# message = MessageCreate(content="Hello, world!") # OK
+# # message = Message(content="This is spam") # Ошибка: Message contains forbidden words
