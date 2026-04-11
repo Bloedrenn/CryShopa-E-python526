@@ -257,3 +257,20 @@
 
 # # user = UserCreate(username="john_doe") # OK
 # user = UserCreate(username="ab") # Ошибка
+
+
+
+
+# ========================================================================================= #
+# from decimal import Decimal
+# from typing import Annotated
+
+# from pydantic import BaseModel, Field
+
+
+# class ProductCreate(BaseModel):
+#   price: Annotated[Decimal, Field(max_digits=6, decimal_places=2)] # Например, 1234.56
+
+
+# # product = ProductCreate(price=109.90) # OK
+# product = ProductCreate(price=1234567.89) # Ошибка: слишком много цифр
