@@ -354,6 +354,10 @@ class PostCreate(BaseModel):
 
   updated_at: Annotated[datetime | None, Field(description="Запись обновлена")] = None
   is_published: Annotated[bool, Field(description="Запись опубликована")] = False
+  # tags: Annotated[list[str], Field(default_factory=list, description="Теги записи")]
+  # default_factory=list: В наши дни так писать уже необязательно
+  tags: Annotated[list[str], Field(description="Теги записи")] = []
+  # Pydantic гарантирует, что каждый новый объект получит свой собственный свежий список
 
 
 example_post_1 = PostCreate(
@@ -361,8 +365,9 @@ example_post_1 = PostCreate(
   title="Основы FastAPI в 2026 году",
   description="Краткое руководство по созданию современных API.",
   content="Здесь должен быть очень длинный текст с контентом вашей записи...",
+  tags=["python", "fastapi", "pydantic"]
 )
-print(example_post_1.created_at)
+print(example_post_1.tags)
 
 # import time
 # time.sleep(5)
@@ -373,4 +378,4 @@ example_post_2 = PostCreate(
   description="Коротко о питере",
   content="Здесь должен быть очень длинный текст с контентом вашей записи...",
 )
-print(example_post_2.created_at)
+print(example_post_2.tags)
