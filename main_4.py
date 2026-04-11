@@ -206,3 +206,36 @@
 # message = MessageRead(id=1, content="Hello, Misha (1)") # OK
 # # message = MessageRead(id=4, content="Hello, Tom (5)") # Ошибка: Content must contain the ID
 # # message = MessageRead(id=7, content="How are you?") # Ошибка: Content must contain the ID
+
+
+
+
+# ========================================================================================= #
+# from pydantic import BaseModel, EmailStr, model_validator
+
+
+# class UserCreate(BaseModel):
+#   name: str
+#   age: int
+#   email: EmailStr | None = None
+
+#   @model_validator(mode='after')
+#   # mode='after': валидация после преобразования данных в типы модели (чаще используется)
+#   def check_age_and_email(self):
+#     if self.age < 18 and self.email:
+#       raise ValueError("Несовершеннолетним нельзя указывать email")
+#     return self
+
+
+# # message = UserCreate(name="Misha", email="example@mail.ru", age=21) # OK
+# # message = UserCreate(name="Misha", age=13) # OK
+# # message = UserCreate(name="Misha", email="example@mail.ru", age=15) # Ошибка: Несовершеннолетним нельзя указывать email
+
+
+# # Пример валидации без объекта модели:
+# # data = {"name": "Alice", "age": 22, "email": "alice@example.com"}
+# data = {"name": "Alice", "age": 16, "email": "alice@example.com"}
+# try:
+#   UserCreate.model_validate(data)
+# except ValueError as e:
+#   print(e)
