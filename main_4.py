@@ -308,3 +308,20 @@
 
 # OrderRead(id=5, age=22) # НО, ошибки нет!
 # # По умолчанию Pydantic игнорирует лишние поля (т. е. можно случайно лишнее передать).
+
+
+
+
+# ========================================================================================= #
+# from decimal import Decimal
+# from typing import Annotated
+
+# from pydantic import BaseModel, Field, NonNegativeInt
+
+
+# class ProductCreate(BaseModel):
+#   product_slug: Annotated[str, Field(min_length=3, max_length=120, pattern=r'^[a-zA-Z0-9-_]+$', description="Слаг продукта")]
+#   name: Annotated[str, Field(min_length=3, max_length=100, description="Название продукта")]
+#   price: Annotated[Decimal, Field(gt=0, description="Цена продукта")]
+#   stock: Annotated[NonNegativeInt, Field(description="Количество продукта на складе")] = 0
+#   # PositiveInt не подходит, т. к. требует значение сторого больше 0
