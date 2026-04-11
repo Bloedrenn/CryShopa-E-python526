@@ -239,3 +239,21 @@
 #   UserCreate.model_validate(data)
 # except ValueError as e:
 #   print(e)
+
+
+
+
+# ========================================================================================= #
+# from typing import Annotated
+
+# from pydantic import BaseModel, StringConstraints
+
+# Username = Annotated[str, StringConstraints(min_length=3, max_length=20, pattern=r"^[a-zA-Z0-9_]+$")]
+
+
+# class UserCreate(BaseModel):
+#   username: Username
+
+
+# # user = UserCreate(username="john_doe") # OK
+# user = UserCreate(username="ab") # Ошибка
