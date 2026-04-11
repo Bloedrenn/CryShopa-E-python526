@@ -274,3 +274,20 @@
 
 # # product = ProductCreate(price=109.90) # OK
 # product = ProductCreate(price=1234567.89) # Ошибка: слишком много цифр
+
+
+
+
+# ========================================================================================= #
+# from typing import Annotated
+
+# from pydantic import BaseModel, Field
+
+
+# class Message(BaseModel):
+#   id: Annotated[int, Field(strict=True)]
+#   # strict=True: запрещает преобразование типов для поля
+
+
+# message = Message(id=123) # OK
+# # message = Message(id="123") # Ошибка: String is not allowed in strict mode
