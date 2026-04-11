@@ -291,3 +291,20 @@
 
 # message = Message(id=123) # OK
 # # message = Message(id="123") # Ошибка: String is not allowed in strict mode
+
+
+
+
+# ========================================================================================= #
+# from typing import Annotated
+
+# from pydantic import BaseModel, Field
+
+
+# class OrderRead(BaseModel):
+#   id: Annotated[int, Field(ge=1)]
+#   # Модель ожидает только поле id типа int.
+
+
+# OrderRead(id=5, age=22) # НО, ошибки нет!
+# # По умолчанию Pydantic игнорирует лишние поля (т. е. можно случайно лишнее передать).
