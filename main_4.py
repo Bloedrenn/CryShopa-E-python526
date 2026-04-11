@@ -181,3 +181,28 @@
 
 # message = MessageCreate(content="Hello, world!") # OK
 # # message = Message(content="This is spam") # Ошибка: Message contains forbidden words
+
+
+
+
+# ========================================================================================= #
+# from pydantic import BaseModel, field_validator
+
+
+# class MessageRead(BaseModel):
+#   id: int
+#   content: str
+
+#   @field_validator("content")
+#   @classmethod
+#   def check_content_id_match(cls, value, info):
+#     # Параметр info в @field_validator предоставляет доступ к полям модели через info.data
+#     # print(info.data)
+#     if str(info.data['id']) not in value:
+#       raise ValueError("Content must contain the ID")
+#     return value
+
+
+# message = MessageRead(id=1, content="Hello, Misha (1)") # OK
+# # message = MessageRead(id=4, content="Hello, Tom (5)") # Ошибка: Content must contain the ID
+# # message = MessageRead(id=7, content="How are you?") # Ошибка: Content must contain the ID
