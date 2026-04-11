@@ -325,3 +325,52 @@
 #   price: Annotated[Decimal, Field(gt=0, description="Цена продукта")]
 #   stock: Annotated[NonNegativeInt, Field(description="Количество продукта на складе")] = 0
 #   # PositiveInt не подходит, т. к. требует значение сторого больше 0
+
+
+
+
+# ========================================================================================= #
+from datetime import datetime, UTC
+from typing import Annotated
+
+from pydantic import BaseModel, Field, PositiveInt
+
+# print(datetime.now())
+# print(datetime.now(UTC))
+
+
+class PostCreate(BaseModel):
+  author_id: Annotated[PositiveInt, Field(description="Идентификатор автора")]
+  title: Annotated[str, Field(max_length=100, description="Заголовок записи, не более 100 символов")]
+  description: Annotated[str | None, Field(max_length=250, description="Описание записи, не более 250 символов")] = None
+  content: Annotated[str, Field(description="Контент записи")]
+
+  # Вариант 1:
+  # created_at: Annotated[datetime, Field(default_factory=datetime.now, description="Запись создана")]
+  # Вариант 2:
+  created_at: Annotated[datetime, Field(default_factory=lambda: datetime.now(UTC), description="Запись создана")] # если хотим в UTC (желательно)
+  # Важно:
+  # = datetime.now() - так нельзя, т. к. значение будет вычислено в момент запуска сервера (один раз)
+
+  updated_at: Annotated[datetime | None, Field(description="Запись обновлена")] = None
+  is_published: Annotated[bool, Field(description="Запись опубликована")] = False
+
+
+example_post_1 = PostCreate(
+  author_id=42,
+  title="Основы FastAPI в 2026 году",
+  description="Краткое руководство по созданию современных API.",
+  content="Здесь должен быть очень длинный текст с контентом вашей записи...",
+)
+print(example_post_1.created_at)
+
+# import time
+# time.sleep(5)
+
+example_post_2 = PostCreate(
+  author_id=33,
+  title="Погода в питере классная",
+  description="Коротко о питере",
+  content="Здесь должен быть очень длинный текст с контентом вашей записи...",
+)
+print(example_post_2.created_at)
