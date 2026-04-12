@@ -3,6 +3,7 @@ pip install uvicorn[standard]
 pip install email-validator
 pip install jinja2
 pip install python-multipart # По умолч. FastAPI обрабатывает только JSON
+pip install isort
 
 
 
