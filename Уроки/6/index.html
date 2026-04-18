@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Messages CRUD</title>
+  </head>
+
+  <body>
+
+    <h1>Сообщения</h1>
+
+    <button onclick="loadMessages()">Загрузить все (GET)</button>
+    <ul id="messages"></ul>
+
+    <h2>Получить одно сообщение</h2>
+    <input type="number" id="getIdInput" placeholder="ID" />
+    <button onclick="getMessage()">Получить (GET by ID)</button>
+    <p id="singleMessage"></p>
+
+    <h2>Создать сообщение</h2>
+    <input type="text" id="messageInput" placeholder="Введите сообщение" />
+    <button onclick="createMessage()">Отправить (POST)</button>
+
+    <h2>Полное обновление (PUT)</h2>
+    <input type="number" id="putIdInput" placeholder="ID" />
+    <input type="text" id="putContentInput" placeholder="Новое содержание" />
+    <button onclick="fullUpdate()">Обновить (PUT)</button>
+
+    <h2>Частичное обновление (PATCH)</h2>
+    <input type="number" id="patchIdInput" placeholder="ID" />
+    <input type="text" id="patchContentInput" placeholder="Новое содержание (можно пусто)" />
+    <button onclick="partialUpdate()">Обновить (PATCH)</button>
+
+    <h2>Удалить сообщение</h2>
+    <input type="number" id="deleteIdInput" placeholder="ID" />
+    <button onclick="deleteMessage()">Удалить (DELETE)</button>
+
+    <script>
+      const API_URL = "http://127.0.0.1:8000/messages";
+
+      // GET ALL
+      async function loadMessages() {
+        try {
+          const response = await fetch(API_URL);
+          const data = await response.json();
+
+          const list = document.getElementById("messages");
+          list.innerHTML = "";
+
+          data.forEach(msg => {
+            const li = document.createElement("li");
+            li.textContent = `#${msg.id}: ${msg.content}`;
+            list.appendChild(li);
+          });
+
+        } catch (err) {
+          console.error("Ошибка GET:", err);
+        }
+      }
+
+      // GET ONE
+      async function getMessage() {
+        const id = document.getElementById("getIdInput").value;
+
+        if (!id) return alert("Введите ID");
+
+        try {
+          const response = await fetch(`${API_URL}/${id}`);
+
+          if (!response.ok) throw new Error();
+
+          const data = await response.json();
+
+          document.getElementById("singleMessage").textContent =
+            `#${data.id}: ${data.content}`;
+
+        } catch {
+          document.getElementById("singleMessage").textContent =
+            "Ошибка: сообщение не найдено";
+        }
+      }
+
+      // POST
+      async function createMessage() {
+        const input = document.getElementById("messageInput");
+        const content = input.value;
+
+        if (!content) return alert("Введите текст!");
+
+        try {
+          await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ content })
+          });
+
+          input.value = "";
+          loadMessages();
+
+        } catch (err) {
+          console.error("Ошибка POST:", err);
+        }
+      }
+
+      // PUT (полное обновление)
+      async function fullUpdate() {
+        const id = document.getElementById("putIdInput").value;
+        const content = document.getElementById("putContentInput").value;
+
+        if (!id || !content) return alert("Введите ID и текст");
+
+        try {
+          const response = await fetch(`${API_URL}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ content })
+          });
+
+          if (!response.ok) throw new Error();
+
+          alert("Полностью обновлено!");
+          loadMessages();
+
+        } catch {
+          alert("Ошибка: сообщение не найдено");
+        }
+      }
+
+      // PATCH (частичное обновление)
+      async function partialUpdate() {
+        const id = document.getElementById("patchIdInput").value;
+        const content = document.getElementById("patchContentInput").value;
+
+        if (!id) return alert("Введите ID");
+
+        try {
+          const response = await fetch(`${API_URL}/${id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              // важно: отправляем только если есть значение
+              ...(content && { content })
+            })
+          });
+
+          if (!response.ok) throw new Error();
+
+          alert("Частично обновлено!");
+          loadMessages();
+
+        } catch {
+          alert("Ошибка: сообщение не найдено");
+        }
+      }
+
+      // DELETE
+      async function deleteMessage() {
+        const id = document.getElementById("deleteIdInput").value;
+
+        if (!id) return alert("Введите ID");
+
+        try {
+          const response = await fetch(`${API_URL}/${id}`, {
+            method: "DELETE"
+          });
+
+          if (!response.ok) throw new Error();
+
+          alert("Удалено!");
+          loadMessages();
+
+        } catch {
+          alert("Ошибка: сообщение не найдено");
+        }
+      }
+    </script>
+
+  </body>
+</html>
