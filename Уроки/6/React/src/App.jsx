@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import Header from './components/UI/Header'
+import Header from '@components/UI/Header'
 
 
 function App() {
