@@ -1,7 +1,7 @@
-const Header = (props) => (
+const Header = ({ text, title }) => (
   <header>
-    <p>{props.text}</p>
-    <p>{props.title}</p>
+    <p>{text}</p>
+    <p>{title}</p>
   </header>
 )
 
