@@ -8,6 +8,7 @@ import carImgUrl from './images/car.png'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [tempText, setTempText] = useState("Hello World!")
 
   const pHover = () => { 
     console.log("Навели на p")
@@ -16,6 +17,7 @@ function App() {
     console.log("Я БОЛЬШАЯ ФУНКЦИЯ")
     console.log("ВО МНЕ МНОГО СТРОЧЕК КОДА")
     console.log("ВО МНЕ МНОГО СТРОЧЕК КОДА")
+    setTempText(10)
   }
 
   return (
@@ -36,6 +38,7 @@ function App() {
 
       {/* 3 способ */}
       <Image imageUrl={carImgUrl} />
+      {tempText}
     </>
   )
 }
