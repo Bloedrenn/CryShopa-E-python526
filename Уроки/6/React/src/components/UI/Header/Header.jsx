@@ -1,6 +1,6 @@
-const Header = ({ text, title }) => (
+const Header = ({ text: myText, title = "Заголовок" }) => (
   <header>
-    <p>{text}</p>
+    <p>{myText}</p>
     <p>{title}</p>
   </header>
 )

@@ -23,7 +23,7 @@ function App() {
       <button onClick={() => setCount(count + 1)}>
         Клик: {count}
       </button>
-      <Header text="МОН" title="ЛУНА" /> {/* Для примера */}
+      <Header text="МОН" /> {/* Для примера */}
     </>
   )
 }
