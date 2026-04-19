@@ -9,6 +9,7 @@ import carImgUrl from './images/car.png'
 function App() {
   const [count, setCount] = useState(0)
   const [tempText, setTempText] = useState("Hello World!")
+  const [userText, setUserText] = useState("")
 
   const pHover = () => { 
     console.log("Навели на p")
@@ -39,6 +40,9 @@ function App() {
       {/* 3 способ */}
       <Image imageUrl={carImgUrl} />
       {tempText}
+
+      <div>Вы ввели: {userText}</div>
+      <input onChange={event => setUserText(event.target.value)} /> {/* Если нужен change как в html, то нужно использовать onBlur */}
     </>
   )
 }
