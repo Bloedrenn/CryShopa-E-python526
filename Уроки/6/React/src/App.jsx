@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import Header from '@components/UI/Header'
 import Image from '@components/Image'
@@ -10,6 +10,23 @@ function App() {
   const [count, setCount] = useState(0)
   const [tempText, setTempText] = useState("Hello World!")
   const [userText, setUserText] = useState("")
+
+  // 1
+  // document.title = `Вы нажали ${count} раз`
+
+  // 2
+  // const testFunc = () => {
+  //   document.title = `Вы нажали ${count} раз`
+  // }
+  // testFunc()
+
+  // 3
+  useEffect(
+    () => {
+      document.title = `Вы нажали ${count} раз`
+    }
+  )
+  // Функция в таком варианте useEffect вызывается: 1. При монтировании компонента. 2. При повторном рендере компонента.
 
   const pHover = () => { 
     console.log("Навели на p")
