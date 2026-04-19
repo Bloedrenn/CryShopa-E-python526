@@ -10,6 +10,7 @@ function App() {
   const [count, setCount] = useState(0)
   const [tempText, setTempText] = useState("Hello World!")
   const [userText, setUserText] = useState("")
+  const [showFirstHeader, setShowFirstHeader] = useState(true)
 
   useEffect(
     () => {
@@ -31,7 +32,9 @@ function App() {
 
   return (
     <>
-      <Header text="Шапка сайта" title="ХЕЛЛО" />
+      {showFirstHeader && <Header text="Шапка сайта" title="ХЕЛЛО" />}
+      <button onClick={() => setShowFirstHeader(!showFirstHeader)}>{showFirstHeader ? "Скрыть" : "Показать"} первый Header</button>
+
       <p onMouseEnter={pHover}>Hello World</p>
       <h1>Счётчик кликов</h1>
       <button onClick={() => setCount(count + 1)}>
