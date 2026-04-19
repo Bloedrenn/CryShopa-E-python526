@@ -17,13 +17,13 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header text="Шапка сайта" title="ХЕЛЛО" />
       <p onMouseEnter={pHover}>Hello World</p>
       <h1>Счётчик кликов</h1>
       <button onClick={() => setCount(count + 1)}>
         Клик: {count}
       </button>
-      <Header /> {/* Для примера */}
+      <Header text="МОН" title="ЛУНА" /> {/* Для примера */}
     </>
   )
 }
