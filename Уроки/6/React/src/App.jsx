@@ -13,7 +13,8 @@ const API_URL = import.meta.env.VITE_API_URL
 function App() {
   // items = [
   //   {id: "1", name: "Xiaomi Redmi 10", description: "Топ за свои деньги!", isAvailable: true},
-  //   {id: "2", name: "Iphone X", description: "Крутой телефон (нет) и дорогой (да)", isAvailable: false}
+  //   {id: "2", name: "Iphone X", description: "Крутой телефон (нет) и дорогой (да)", isAvailable: false},
+  //   {id: "3", name: "Tesla Model Y", description: "Новая, купил вчера", isAvailable: true}
   // ]
   const [items, setItems] = useState([])
   const [itemsLoading, setItemsLoading] = useState(true)
@@ -38,6 +39,12 @@ function App() {
       })
   }, [])
 
+  const addItem = (newItem) => {
+    ///// {name: "Tesla Model Y", description: "Новая, купил вчера", isAvailable: true}
+    axios.post(`${API_URL}/items`, newItem)
+      .then(response => setItems([...items, response.data]))
+  }
+
   return (
     <>
       <Header />
@@ -50,7 +57,7 @@ function App() {
         />
       </main>
       <aside className={styles.aside}>
-        <AddItem />
+        <AddItem onAdd={addItem} />
       </aside>
     </>
   )
