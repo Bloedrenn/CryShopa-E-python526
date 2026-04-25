@@ -13,6 +13,7 @@ function App() {
   // ]
   const [items, setItems] = useState([])
   const [itemsLoading, setItemsLoading] = useState(true)
+  const [itemsError, setItemsError] = useState(null)
 
   useEffect(() => {
     axios.get(`${API_URL}/items`)
@@ -23,10 +24,15 @@ function App() {
       .catch(error => {
         console.error(error)
         setItemsLoading(false)
+
+        const errMsg = (
+          error.message === "Network Error" ? "Ошибка сети"
+          : error.message === "Request failed with status code 404" ? "Ресурс не найден" // Можно так: error.response.status === 404
+          : "Повторите попытку позже"
+        )
+        setItemsError(`Ошибка загрузки вещей: ${errMsg}`)
       })
   }, [])
-
-  // Лучше не писать условие itemsLoading здесь - перед основным return'ом
 
   return (
     <>
@@ -37,6 +43,8 @@ function App() {
         {
           itemsLoading ? (
             <div>Загрузка вещей...</div>
+          ) : itemsError ? (
+            <div>{itemsError}</div>
           ) : (
             items.map(item => (
               <li key={item.id}>
