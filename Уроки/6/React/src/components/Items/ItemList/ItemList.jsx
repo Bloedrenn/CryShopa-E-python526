@@ -43,12 +43,14 @@ const ItemList = () => {
             </div>
           ) : itemsError ? (
             <div>{itemsError}</div>
-          ) : (
+          ) : items.length !== 0 ? (
             items.map(item => (
               <li key={item.id}>
                 <strong>{item.name}</strong>: {item.description} - {item.isAvailable ? "В наличии" : "Нет в наличии"}
               </li>
             ))
+          ) : (
+            <div>Вещей ещё нет</div>
           )
         }
       </ul>
