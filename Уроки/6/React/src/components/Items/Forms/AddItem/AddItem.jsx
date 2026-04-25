@@ -1,18 +1,37 @@
+import { useState } from 'react'
+
 import styles from './AddItem.module.css'
 
 
-const AddItem = () => (
-  <form className={styles.form}>
-    <input type="text" placeholder='Название' />
-    <textarea placeholder='Описание'></textarea>
+const AddItem = () => {
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [isAvailable, setIsAvailable] = useState(false)
 
-    <div>
-      <input type='checkbox' id='isAvailable' />
-      <label htmlFor='isAvailable'>В наличии?</label>
-    </div>
+  return (
+    <form className={styles.form}>
+      <input
+        type="text"
+        placeholder='Название'
+        onChange={e => setName(e.target.value)}
+      />
+      <textarea
+        placeholder='Описание'
+        onChange={e => setDescription(e.target.value)}
+      ></textarea>
 
-    <button type='button'>Добавить</button>
-  </form>
-)
+      <div>
+        <input
+          type='checkbox'
+          id='isAvailable'
+          onChange={e => setIsAvailable(e.target.checked)}
+        />
+        <label htmlFor='isAvailable'>В наличии?</label>
+      </div>
+
+      <button type='button'>Добавить</button>
+    </form>
+  )
+}
 
 export default AddItem
