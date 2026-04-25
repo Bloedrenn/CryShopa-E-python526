@@ -12,12 +12,21 @@ function App() {
   //   {id: "2", name: "Iphone X", description: "Крутой телефон (нет) и дорогой (да)", isAvailable: false}
   // ]
   const [items, setItems] = useState([])
+  const [itemsLoading, setItemsLoading] = useState(true)
 
   useEffect(() => {
     axios.get(`${API_URL}/items`)
-      .then(response => setItems(response.data))
-      .catch(error => console.error(error))
+      .then(response => {
+        setItems(response.data)
+        setItemsLoading(false)
+      })
+      .catch(error => {
+        console.error(error)
+        setItemsLoading(false)
+      })
   }, [])
+
+  // Лучше не писать условие itemsLoading здесь - перед основным return'ом
 
   return (
     <>
@@ -26,11 +35,15 @@ function App() {
       <h1>Список вещей</h1>
       <ul>
         {
-          items.map(item => (
-            <li key={item.id}>
-              <strong>{item.name}</strong>: {item.description} - {item.isAvailable ? "В наличии" : "Нет в наличии"}
-            </li>
-          ))
+          itemsLoading ? (
+            <div>Загрузка вещей...</div>
+          ) : (
+            items.map(item => (
+              <li key={item.id}>
+                <strong>{item.name}</strong>: {item.description} - {item.isAvailable ? "В наличии" : "Нет в наличии"}
+              </li>
+            ))
+          )
         }
       </ul>
     </>
