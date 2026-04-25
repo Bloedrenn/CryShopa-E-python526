@@ -7,7 +7,7 @@ app = FastAPI(title="Messages CRUD")
 # Настраиваем CORS для взаимодействия с фронтендом
 app.add_middleware(
   CORSMiddleware,
-  allow_origins=["null"], # allow_origins=["*"] - если надо разрешить запросы со всех источников
+  allow_origins=["http://localhost:5173"], # allow_origins=["*"] - если надо разрешить запросы со всех источников
   allow_methods=["*"],
 )
 
