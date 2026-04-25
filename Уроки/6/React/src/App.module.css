@@ -1,0 +1,12 @@
+.main {
+  margin: 50px 100px;
+  width: 50%;
+  float: left;
+}
+
+.aside {
+  width: 20%;
+  margin-top: 50px;
+  margin-left: 5%;
+  float: left;
+}
