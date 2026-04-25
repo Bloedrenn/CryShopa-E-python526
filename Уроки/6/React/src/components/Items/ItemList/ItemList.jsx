@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
+import styles from './ItemList.module.css'
+
 const API_URL = import.meta.env.VITE_API_URL
 
 
@@ -35,7 +37,7 @@ const ItemList = () => {
   return (
     <>
       <h1>Список вещей</h1>
-      <ul>
+      <div>
         {
           itemsLoading ? (
             <div className="spinner-border" role="status">
@@ -45,15 +47,17 @@ const ItemList = () => {
             <div>{itemsError}</div>
           ) : items.length !== 0 ? (
             items.map(item => (
-              <li key={item.id}>
-                <strong>{item.name}</strong>: {item.description} - {item.isAvailable ? "В наличии" : "Нет в наличии"}
-              </li>
+              <div key={item.id} className={styles.item}>
+                <strong>{item.name}</strong>
+                <div>{item.description}</div>
+                <div>{item.isAvailable ? 'В наличии :)' : 'Нет в наличии :('}</div>
+              </div>
             ))
           ) : (
             <div>Вещей ещё нет</div>
           )
         }
-      </ul>
+      </div>
     </>
   )
 }
