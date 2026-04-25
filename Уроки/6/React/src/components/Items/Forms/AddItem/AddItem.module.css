@@ -1,0 +1,26 @@
+.form input:not([type="checkbox"]),
+.form textarea,
+.form button {
+  width: 100%;
+  padding: 15px 5%;
+  margin-bottom: 10px;
+  border: 0;
+  background-color: #222;
+  color: #fff;
+  outline: none;
+  font-size: 15px;
+}
+
+.form input[type="checkbox"] {
+  margin: 10px;
+}
+
+.form button {
+  width: 100%;
+  cursor: pointer;
+  transition: transform 500ms ease;
+}
+
+.form button:hover {
+  transform: scale(1.1);
+}
